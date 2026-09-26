@@ -7,7 +7,7 @@ export function Logo({ to = "/" }: { to?: "/" | "/app" }) {
       <span className="grid h-8 w-8 place-items-center rounded-lg bg-navy text-navy-foreground">
         <Gauge className="h-4 w-4" />
       </span>
-      MotoEm<span className="text-primary">Dia</span>
+      <span>MotoEm<span className="text-primary">Dia</span></span>
     </Link>
   );
 }
