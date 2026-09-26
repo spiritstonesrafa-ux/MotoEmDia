@@ -14,16 +14,284 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      maintenance_intervals: {
+        Row: {
+          category: string
+          id: string
+          interval_km: number | null
+          motorcycle_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          id?: string
+          interval_km?: number | null
+          motorcycle_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          id?: string
+          interval_km?: number | null
+          motorcycle_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "maintenance_intervals_motorcycle_id_fkey"
+            columns: ["motorcycle_id"]
+            isOneToOne: false
+            referencedRelation: "motorcycles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      maintenance_records: {
+        Row: {
+          cost: number | null
+          created_at: string
+          id: string
+          mileage: number
+          motorcycle_id: string
+          notes: string | null
+          service_date: string
+          service_type: string
+          user_id: string
+          workshop: string | null
+        }
+        Insert: {
+          cost?: number | null
+          created_at?: string
+          id?: string
+          mileage: number
+          motorcycle_id: string
+          notes?: string | null
+          service_date: string
+          service_type: string
+          user_id: string
+          workshop?: string | null
+        }
+        Update: {
+          cost?: number | null
+          created_at?: string
+          id?: string
+          mileage?: number
+          motorcycle_id?: string
+          notes?: string | null
+          service_date?: string
+          service_type?: string
+          user_id?: string
+          workshop?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "maintenance_records_motorcycle_id_fkey"
+            columns: ["motorcycle_id"]
+            isOneToOne: false
+            referencedRelation: "motorcycles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mileage_updates: {
+        Row: {
+          created_at: string
+          id: string
+          mileage: number
+          motorcycle_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mileage: number
+          motorcycle_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mileage?: number
+          motorcycle_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mileage_updates_motorcycle_id_fkey"
+            columns: ["motorcycle_id"]
+            isOneToOne: false
+            referencedRelation: "motorcycles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      motorcycles: {
+        Row: {
+          created_at: string
+          current_mileage: number
+          engine_capacity: number | null
+          id: string
+          manufacturer: string
+          model: string
+          nickname: string | null
+          plate: string | null
+          updated_at: string
+          user_id: string
+          year: number
+        }
+        Insert: {
+          created_at?: string
+          current_mileage?: number
+          engine_capacity?: number | null
+          id?: string
+          manufacturer: string
+          model: string
+          nickname?: string | null
+          plate?: string | null
+          updated_at?: string
+          user_id: string
+          year: number
+        }
+        Update: {
+          created_at?: string
+          current_mileage?: number
+          engine_capacity?: number | null
+          id?: string
+          manufacturer?: string
+          model?: string
+          nickname?: string | null
+          plate?: string | null
+          updated_at?: string
+          user_id?: string
+          year?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          phone: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          phone?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      quote_requests: {
+        Row: {
+          contact_name: string
+          created_at: string
+          description: string | null
+          id: string
+          mileage: number | null
+          motorcycle_id: string | null
+          motorcycle_label: string | null
+          phone: string
+          preferred_contact: string
+          service_type: string
+          status: Database["public"]["Enums"]["quote_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          contact_name: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          mileage?: number | null
+          motorcycle_id?: string | null
+          motorcycle_label?: string | null
+          phone: string
+          preferred_contact?: string
+          service_type: string
+          status?: Database["public"]["Enums"]["quote_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          contact_name?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          mileage?: number | null
+          motorcycle_id?: string | null
+          motorcycle_label?: string | null
+          phone?: string
+          preferred_contact?: string
+          service_type?: string
+          status?: Database["public"]["Enums"]["quote_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quote_requests_motorcycle_id_fkey"
+            columns: ["motorcycle_id"]
+            isOneToOne: false
+            referencedRelation: "motorcycles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      quote_status:
+        | "novo"
+        | "em_contato"
+        | "orcamento_enviado"
+        | "servico_realizado"
+        | "encerrado"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +418,15 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      quote_status: [
+        "novo",
+        "em_contato",
+        "orcamento_enviado",
+        "servico_realizado",
+        "encerrado",
+      ],
+    },
   },
 } as const
