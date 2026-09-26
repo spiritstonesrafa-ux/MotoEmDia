@@ -56,8 +56,8 @@ function Perfil() {
       <PageTitle title="Meu perfil" />
       <form onSubmit={onSubmit} className="space-y-4 rounded-2xl border bg-card p-5">
         <div className="space-y-1.5">
-          <Label>E-mail</Label>
-          <Input value={p.email ?? ""} disabled className="h-11" />
+          <Label htmlFor="email">E-mail</Label>
+          <Input id="email" value={p.email ?? ""} disabled className="h-11" />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="name">Nome</Label>
