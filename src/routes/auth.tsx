@@ -3,6 +3,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable/index";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,6 +38,14 @@ function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  async function onGoogle() {
+    setLoading(true);
+    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+    if (result.error) { toast.error("Não foi possível entrar com Google."); setLoading(false); return; }
+    if (result.redirected) return;
+    navigate({ to: "/app" });
+  }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -111,6 +120,16 @@ function AuthPage() {
                 {loading ? "Aguarde..." : mode === "signup" ? "Criar conta" : mode === "login" ? "Entrar" : "Enviar link"}
               </Button>
             </form>
+            {mode !== "forgot" && (
+              <>
+                <div className="my-4 flex items-center gap-3 text-xs text-muted-foreground">
+                  <span className="h-px flex-1 bg-border" />ou<span className="h-px flex-1 bg-border" />
+                </div>
+                <Button type="button" variant="outline" className="h-11 w-full" disabled={loading} onClick={onGoogle}>
+                  Continuar com Google
+                </Button>
+              </>
+            )}
             <div className="mt-5 space-y-2 text-center text-sm">
               {mode === "login" && (
                 <>
