@@ -71,9 +71,9 @@ function Orcamento() {
       <PageTitle title="Solicitar orçamento" subtitle="Receba um contato para o serviço que você precisa." />
       <form onSubmit={onSubmit} className="space-y-4 rounded-2xl border bg-card p-5">
         <div className="space-y-1.5">
-          <Label>Serviço desejado</Label>
+          <Label htmlFor="service_type">Serviço desejado</Label>
           <Select value={service} onValueChange={setService}>
-            <SelectTrigger className="h-11"><SelectValue placeholder="Escolha o serviço" /></SelectTrigger>
+            <SelectTrigger id="service_type" className="h-11"><SelectValue placeholder="Escolha o serviço" /></SelectTrigger>
             <SelectContent>{SERVICE_TYPES.map((s) => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}</SelectContent>
           </Select>
         </div>
@@ -96,14 +96,14 @@ function Orcamento() {
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="mileage">Quilometragem</Label>
-            <Input id="mileage" name="mileage" type="number" inputMode="numeric" defaultValue={m?.current_mileage ?? ""} className="h-11" />
+            <Input id="mileage" name="mileage" type="number" min={0} inputMode="numeric" defaultValue={m?.current_mileage ?? ""} className="h-11" />
           </div>
         </div>
         <div className="space-y-1.5">
-          <Label>Preferência de contato</Label>
-          <div className="grid grid-cols-2 gap-2">
+          <Label id="pref-label">Preferência de contato</Label>
+          <div role="group" aria-labelledby="pref-label" className="grid grid-cols-2 gap-2">
             {([["whatsapp", "WhatsApp"], ["ligacao", "Ligação"]] as const).map(([v, l]) => (
-              <button type="button" key={v} onClick={() => setContact(v)}
+              <button type="button" key={v} aria-pressed={contact === v} onClick={() => setContact(v)}
                 className={`h-11 rounded-xl border text-sm font-medium ${contact === v ? "border-primary bg-accent text-primary" : ""}`}>{l}</button>
             ))}
           </div>

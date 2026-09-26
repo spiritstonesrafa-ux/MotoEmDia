@@ -46,11 +46,12 @@ export function MaintenanceForm({
   return (
     <form onSubmit={handle} className="space-y-5 rounded-2xl border bg-card p-5">
       <div>
-        <Label>Tipo de serviço</Label>
-        <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <Label id="type-label">Tipo de serviço</Label>
+        <div role="group" aria-labelledby="type-label" className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
           {SERVICE_TYPES.map((s) => (
             <button
               type="button"
+              aria-pressed={type === s.value}
               key={s.value}
               onClick={() => setType(s.value)}
               className={`min-h-11 rounded-xl border px-3 py-2 text-sm font-medium transition ${
