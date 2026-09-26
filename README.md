@@ -2,8 +2,8 @@
 
 > Um MVP para ajudar motociclistas a registrar manutenções, acompanhar a quilometragem e identificar o que merece atenção antes que a manutenção vire imprevisto.
 
-[![Aplicação](https://img.shields.io/badge/aplicação-online-0f766e)](https://screenshot-exact-match-191.lovable.app)
-[![Demonstração](https://img.shields.io/badge/demo-sem%20cadastro-f59e0b)](https://screenshot-exact-match-191.lovable.app/demo)
+[![Aplicação](https://img.shields.io/badge/aplicação-online-0f766e)](https://motoemdia.lovable.app/)
+[![Demonstração](https://img.shields.io/badge/demo-sem%20cadastro-f59e0b)](https://motoemdia.lovable.app/demo)
 [![Repositório](https://img.shields.io/badge/GitHub-MotoEmDia-181717?logo=github)](https://github.com/spiritstonesrafa-ux/MotoEmDia)
 
 ## Visão geral
@@ -12,8 +12,8 @@ O MotoEmDia foi desenvolvido como projeto de desafio da DIO para exercitar desco
 
 O MVP não oferece diagnóstico mecânico. Seus indicadores são organizacionais e usam somente os dados informados pelo usuário; o manual da motocicleta e a avaliação de um profissional continuam sendo as referências para decisões de manutenção.
 
-- **Aplicação:** <https://screenshot-exact-match-191.lovable.app>
-- **Demonstração sem cadastro:** <https://screenshot-exact-match-191.lovable.app/demo>
+- **Aplicação:** <https://motoemdia.lovable.app/>
+- **Demonstração sem cadastro:** <https://motoemdia.lovable.app/demo>
 - **Código-fonte:** <https://github.com/spiritstonesrafa-ux/MotoEmDia>
 
 ## Problema
