@@ -30,7 +30,7 @@ function Leads() {
 
   async function changeStatus(id: string, status: QuoteStatus) {
     const { error } = await supabase.from("quote_requests").update({ status }).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Status atualizado");
     qc.invalidateQueries({ queryKey: ["admin-data"] });
   }

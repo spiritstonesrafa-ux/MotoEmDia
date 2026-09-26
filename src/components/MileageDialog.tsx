@@ -17,13 +17,13 @@ export function MileageDialog({ moto }: { moto: Moto }) {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const value = Number(new FormData(e.currentTarget).get("km"));
-    if (!Number.isInteger(value) || value < 0) return toast.error("Informe um número válido");
-    if (value < moto.current_mileage) return toast.error(`Não pode ser menor que ${km(moto.current_mileage)}`);
+    if (!Number.isInteger(value) || value < 0) { toast.error("Informe um número válido"); return; }
+    if (value < moto.current_mileage) { toast.error(`Não pode ser menor que ${km(moto.current_mileage)}`); return; }
     if (value === moto.current_mileage) return setOpen(false);
     setSaving(true);
     const { error } = await supabase.from("motorcycles").update({ current_mileage: value }).eq("id", moto.id);
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Quilometragem atualizada");
     qc.invalidateQueries({ queryKey: ["moto"] });
     setOpen(false);

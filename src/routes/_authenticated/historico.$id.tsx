@@ -33,7 +33,7 @@ function Detalhe() {
 
   async function remove() {
     const { error } = await supabase.from("maintenance_records").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Registro excluído");
     await qc.invalidateQueries({ queryKey: ["records"] });
     navigate({ to: "/historico" });

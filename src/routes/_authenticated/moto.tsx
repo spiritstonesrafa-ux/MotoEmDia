@@ -40,16 +40,16 @@ function MotoPage() {
     e.preventDefault();
     const f = Object.fromEntries(new FormData(e.currentTarget));
     const parsed = schema.safeParse(f);
-    if (!parsed.success) return toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Dados inválidos"); return; }
     if (m && parsed.data.current_mileage < m.current_mileage)
-      return toast.error("A quilometragem não pode ser menor que a atual");
+      { toast.error("A quilometragem não pode ser menor que a atual"); return; }
     setSaving(true);
     const { data: u } = await supabase.auth.getUser();
     const { error } = m
       ? await supabase.from("motorcycles").update(parsed.data).eq("id", m.id)
       : await supabase.from("motorcycles").insert({ ...parsed.data, user_id: u.user!.id });
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(m ? "Moto atualizada" : "Moto cadastrada!");
     await qc.invalidateQueries({ queryKey: ["moto"] });
     navigate({ to: "/app" });

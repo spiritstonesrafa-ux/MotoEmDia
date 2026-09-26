@@ -35,11 +35,11 @@ function Perfil() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const parsed = schema.safeParse(Object.fromEntries(new FormData(e.currentTarget)));
-    if (!parsed.success) return toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Dados inválidos"); return; }
     setSaving(true);
     const { error } = await supabase.from("profiles").update(parsed.data).eq("user_id", p.user_id);
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Perfil atualizado");
     qc.invalidateQueries({ queryKey: ["profile"] });
   }

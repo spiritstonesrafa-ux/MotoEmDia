@@ -23,7 +23,7 @@ const schema = z.object({
   service_type: z.string().min(1, "Escolha o serviço"),
   description: z.string().trim().max(1000).transform((v) => v || null),
   contact_name: z.string().trim().min(2, "Informe seu nome").max(100),
-  phone: z.string().trim().refine((v) => { const d = onlyDigits(v).length; return d >= 10 && d <= 13; }, "Telefone inválido").max(20),
+  phone: z.string().trim().max(20).refine((v) => { const d = onlyDigits(v).length; return d >= 10 && d <= 13; }, "Telefone inválido"),
   motorcycle_label: z.string().trim().max(120),
   mileage: z.union([z.literal(""), z.coerce.number().int().min(0)]).transform((v) => (v === "" ? null : v)),
   preferred_contact: z.enum(["whatsapp", "ligacao"]),
@@ -56,12 +56,12 @@ function Orcamento() {
     e.preventDefault();
     const f = Object.fromEntries(new FormData(e.currentTarget));
     const parsed = schema.safeParse({ ...f, service_type: service, preferred_contact: contact });
-    if (!parsed.success) return toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Dados inválidos"); return; }
     setSaving(true);
     const { data: u } = await supabase.auth.getUser();
     const { error } = await supabase.from("quote_requests").insert({ ...parsed.data, user_id: u.user!.id, motorcycle_id: m?.id ?? null });
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["quotes"] });
     setDone(true);
   }
@@ -102,7 +102,7 @@ function Orcamento() {
         <div className="space-y-1.5">
           <Label>Preferência de contato</Label>
           <div className="grid grid-cols-2 gap-2">
-            {[["whatsapp", "WhatsApp"], ["ligacao", "Ligação"]].map(([v, l]) => (
+            {([["whatsapp", "WhatsApp"], ["ligacao", "Ligação"]] as const).map(([v, l]) => (
               <button type="button" key={v} onClick={() => setContact(v)}
                 className={`h-11 rounded-xl border text-sm font-medium ${contact === v ? "border-primary bg-accent text-primary" : ""}`}>{l}</button>
             ))}

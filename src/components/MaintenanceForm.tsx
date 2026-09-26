@@ -36,8 +36,8 @@ export function MaintenanceForm({
     e.preventDefault();
     const f = Object.fromEntries(new FormData(e.currentTarget));
     const parsed = schema.safeParse({ ...f, service_type: type });
-    if (!parsed.success) return toast.error(parsed.error.issues[0].message);
-    if (parsed.data.service_date > today) return toast.error("A data não pode estar no futuro");
+    if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Dados inválidos"); return; }
+    if (parsed.data.service_date > today) { toast.error("A data não pode estar no futuro"); return; }
     setSaving(true);
     await onSubmit(parsed.data);
     setSaving(false);

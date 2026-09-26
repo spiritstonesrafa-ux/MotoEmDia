@@ -11,8 +11,8 @@ import { Label } from "@/components/ui/label";
 type Mode = "login" | "signup" | "forgot";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (s: Record<string, unknown>): { mode?: Mode } => ({
-    mode: s.mode === "signup" || s.mode === "forgot" ? s.mode : undefined,
+  validateSearch: (s: Record<string, unknown>): { mode?: Mode | undefined } => ({
+    mode: s["mode"] === "signup" || s["mode"] === "forgot" ? s["mode"] : undefined,
   }),
   head: () => ({
     meta: [
@@ -47,24 +47,24 @@ function AuthPage() {
     try {
       if (mode === "signup") {
         const parsed = signupSchema.safeParse({ name: f.get("name"), email, password });
-        if (!parsed.success) return toast.error(parsed.error.issues[0].message);
+        if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Dados inválidos"); return; }
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: { emailRedirectTo: window.location.origin + "/app", data: { name: parsed.data.name } },
         });
-        if (error) return toast.error(traduz(error.message));
+        if (error) { toast.error(traduz(error.message)); return; }
         if (data.session) navigate({ to: "/moto" });
         else setSent("Enviamos um link de confirmação para o seu e-mail. Após confirmar, você poderá cadastrar sua moto.");
       } else if (mode === "login") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) return toast.error(traduz(error.message));
+        if (error) { toast.error(traduz(error.message)); return; }
         navigate({ to: "/app" });
       } else {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
           redirectTo: window.location.origin + "/reset-password",
         });
-        if (error) return toast.error(traduz(error.message));
+        if (error) { toast.error(traduz(error.message)); return; }
         setSent("Se o e-mail estiver cadastrado, você receberá um link para redefinir a senha.");
       }
     } finally {

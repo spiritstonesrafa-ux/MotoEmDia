@@ -36,13 +36,13 @@ function Intervalos() {
     for (const c of CATEGORIES) {
       const raw = String(f.get(c.value) ?? "").trim();
       const n = raw === "" ? null : Number(raw);
-      if (n !== null && (!Number.isInteger(n) || n <= 0 || n > 200000)) return toast.error(`Intervalo inválido em ${c.label}`);
+      if (n !== null && (!Number.isInteger(n) || n <= 0 || n > 200000)) { toast.error(`Intervalo inválido em ${c.label}`); return; }
       rows.push({ user_id: u.user!.id, motorcycle_id: m.id, category: c.value, interval_km: n });
     }
     setSaving(true);
     const { error } = await supabase.from("maintenance_intervals").upsert(rows, { onConflict: "motorcycle_id,category" });
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Intervalos salvos");
     await qc.invalidateQueries({ queryKey: ["intervals"] });
     navigate({ to: "/app" });

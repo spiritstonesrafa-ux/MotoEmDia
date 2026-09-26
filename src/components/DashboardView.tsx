@@ -83,7 +83,7 @@ export function DashboardView({
   );
 }
 
-function Stat({ icon, label, value, sub }: { icon: ReactNode; label: string; value: string; sub?: string }) {
+function Stat({ icon, label, value, sub }: { icon: ReactNode; label: string; value: string; sub?: string | undefined }) {
   return (
     <div className="rounded-2xl border bg-card p-4 shadow-sm">
       <div className="flex items-center gap-2 text-xs text-muted-foreground">
