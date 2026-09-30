@@ -21,9 +21,9 @@ for (const [key, value] of Object.entries(PUBLIC_ENV_FALLBACKS)) {
   if (!process.env[key]) process.env[key] = value;
   fallbackDefine[`import.meta.env.${key}`] = JSON.stringify(process.env[key]);
 }
-if (!process.env.SUPABASE_URL) process.env.SUPABASE_URL = PUBLIC_ENV_FALLBACKS.VITE_SUPABASE_URL;
-if (!process.env.SUPABASE_PUBLISHABLE_KEY)
-  process.env.SUPABASE_PUBLISHABLE_KEY = PUBLIC_ENV_FALLBACKS.VITE_SUPABASE_PUBLISHABLE_KEY;
+if (!process.env["SUPABASE_URL"]) process.env["SUPABASE_URL"] = PUBLIC_ENV_FALLBACKS["VITE_SUPABASE_URL"];
+if (!process.env["SUPABASE_PUBLISHABLE_KEY"])
+  process.env["SUPABASE_PUBLISHABLE_KEY"] = PUBLIC_ENV_FALLBACKS["VITE_SUPABASE_PUBLISHABLE_KEY"];
 
 export default defineConfig({
   tanstackStart: {
