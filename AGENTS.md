@@ -14,3 +14,4 @@
 - Admin role lives only in `user_roles` (granted via SQL/backend), never inferred from email in code — prevents privilege escalation.
 - Mileage regression is blocked and logged by a DB trigger on `motorcycles` — single source of truth for the rule.
 - Demo data lives only in `src/routes/demo.tsx` as static constants — keeps fake data out of production tables and needs no credentials.
+- Public backend URL/publishable key have fallbacks in vite.config.ts — .env is gitignored, so repo-based builds otherwise ship without them and crash.
